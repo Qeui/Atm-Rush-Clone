@@ -37,11 +37,12 @@ public class MoneyCollect : MonoBehaviour
     {
         int index = moneys.IndexOf(destroyedMoney);
 
-        for (int i = index; i < moneys.Count; i++)
+        for (int i = moneys.Count; i > index; i--)
         {
-            moneys.Remove(destroyedMoney);
-            DOTween.Kill(destroyedMoney.transform);
-            Destroy(destroyedMoney);
+            GameObject destroyingMoney = moneys[index];
+            moneys.Remove(destroyingMoney);
+            DOTween.Kill(destroyingMoney.transform);
+            Destroy(destroyingMoney);
         }
         
     }
