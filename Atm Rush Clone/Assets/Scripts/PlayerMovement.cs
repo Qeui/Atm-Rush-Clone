@@ -28,8 +28,7 @@ public class PlayerMovement : MonoBehaviour
             endPos = Input.mousePosition;
             float difX = endPos.x - firstPos.x;
             transform.Translate(difX * Time.deltaTime * HorizontalSpeed, 0, 0);
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -7, 7), transform.position.y, transform.position.z);
-            Debug.Log(difX);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.5f, 4.5f), transform.position.y, transform.position.z);
         }
         if (Input.GetMouseButtonUp(0))
         {

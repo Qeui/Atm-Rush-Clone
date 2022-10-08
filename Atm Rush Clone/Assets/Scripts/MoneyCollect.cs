@@ -7,11 +7,12 @@ public class MoneyCollect : MonoBehaviour
 {
     public static MoneyCollect instance;
     public List<GameObject> moneys = new List<GameObject>();
-    private float followTime = 0.25f;
+    private float followTime = 0.05f;
 
     private void Awake()
     {
-        if(instance == null)
+        DOTween.SetTweensCapacity(3000, 50);
+        if (instance == null)
         {
             instance = this;
         }
@@ -19,24 +20,30 @@ public class MoneyCollect : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            MoveMoneys();
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            MoveMoneysToOrigin();
-        }
+        MoveMoneys();
     }
 
     public void StackMoney(GameObject other, int index)
     {
         other.transform.parent = transform;
         Vector3 newPos = moneys[index].transform.position;
-        newPos.z += 1;
+        newPos.z += 1.5f;
         other.transform.position = newPos;
         moneys.Add(other);
         StartCoroutine(StackMoneyEffect());
+    }
+
+    public void RemoveMoney(GameObject destroyedMoney)
+    {
+        int index = moneys.IndexOf(destroyedMoney);
+
+        for (int i = index; i < moneys.Count; i++)
+        {
+            moneys.Remove(destroyedMoney);
+            DOTween.Kill(destroyedMoney.transform);
+            Destroy(destroyedMoney);
+        }
+        
     }
 
     private void MoveMoneys()
@@ -48,9 +55,10 @@ public class MoneyCollect : MonoBehaviour
             moneys[i].transform.DOMoveX(pos.x, followTime);
         }
     }
+
     private void MoveMoneysToOrigin()
     {
-        for (int i = 1; i < moneys.Count; i++)
+        for(int i = 1; i < moneys.Count; i++)
         {
             Vector3 pos = moneys[i].transform.position;
             pos.x = moneys[0].transform.position.x;
@@ -68,7 +76,7 @@ public class MoneyCollect : MonoBehaviour
             Scale *= 1.2f;
 
             moneys[index].transform.DOScale(Scale, 0.1f).OnComplete(() =>
-            moneys[index].transform.DOScale(new Vector3(1, 1, 1), 0.1f));
+            moneys[index].transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.1f));
             yield return new WaitForSeconds(0.05f);
         }
     }
