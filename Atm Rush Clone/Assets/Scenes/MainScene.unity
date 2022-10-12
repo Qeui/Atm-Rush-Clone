@@ -931,6 +931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneys:
   - {fileID: 763193937}
+  CollectableMoneys: {fileID: 1017832467}
 --- !u!114 &735352331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,7 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017832467}
   m_Layer: 0
-  m_Name: Moneys
+  m_Name: Collectable Moneys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1937,7 +1938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2505654641139034011, guid: 48c51be334385104fbbbfd9cc185ccb6, type: 3}
       propertyPath: m_TagString
-      value: Money
+      value: Collected
       objectReference: {fileID: 0}
     - target: {fileID: 2505654641139034012, guid: 48c51be334385104fbbbfd9cc185ccb6, type: 3}
       propertyPath: IsPlayer
@@ -1945,7 +1946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2505654641139034014, guid: 48c51be334385104fbbbfd9cc185ccb6, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2505654641139034015, guid: 48c51be334385104fbbbfd9cc185ccb6, type: 3}
       propertyPath: m_RootOrder

@@ -7,6 +7,7 @@ public class MoneyCollect : MonoBehaviour
 {
     public static MoneyCollect instance;
     public List<GameObject> moneys = new List<GameObject>();
+    public Transform CollectableMoneys;
     private float followTime = 0.05f;
 
     private void Awake()
@@ -18,7 +19,7 @@ public class MoneyCollect : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MoveMoneys();
     }
@@ -40,9 +41,24 @@ public class MoneyCollect : MonoBehaviour
         for (int i = moneys.Count; i > index; i--)
         {
             GameObject destroyingMoney = moneys[index];
-            moneys.Remove(destroyingMoney);
-            DOTween.Kill(destroyingMoney.transform);
-            Destroy(destroyingMoney);
+            if(destroyingMoney == destroyedMoney)
+            {
+                moneys.Remove(destroyingMoney);
+                DOTween.Kill(destroyingMoney.transform);
+                Destroy(destroyingMoney);
+            }
+            else
+            {
+                moneys.Remove(destroyingMoney);
+                Destroy(destroyingMoney.GetComponent<MoneyCollision>());
+                destroyingMoney.GetComponent<BoxCollider>().isTrigger = true;
+                destroyingMoney.tag = "Money";
+                destroyingMoney.transform.parent = CollectableMoneys;
+                Vector3 jumpPos = destroyingMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
+                destroyingMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false);
+
+            }
+            
         }
         
     }
