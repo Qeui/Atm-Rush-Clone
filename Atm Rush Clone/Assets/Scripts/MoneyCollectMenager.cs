@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class MoneyCollect : MonoBehaviour
+public class MoneyCollectMenager : MonoBehaviour
 {
-    public static MoneyCollect instance;
+    public static MoneyCollectMenager instance;
     public List<GameObject> moneys = new List<GameObject>();
     public Transform CollectableMoneys;
     private float followTime = 0.05f;
@@ -13,6 +13,7 @@ public class MoneyCollect : MonoBehaviour
     private void Awake()
     {
         DOTween.SetTweensCapacity(3000, 50);
+
         if (instance == null)
         {
             instance = this;
@@ -51,16 +52,20 @@ public class MoneyCollect : MonoBehaviour
             {
                 moneys.Remove(destroyingMoney);
                 Destroy(destroyingMoney.GetComponent<MoneyCollision>());
-                destroyingMoney.GetComponent<BoxCollider>().isTrigger = true;
-                destroyingMoney.tag = "Money";
                 destroyingMoney.transform.parent = CollectableMoneys;
                 Vector3 jumpPos = destroyingMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
-                destroyingMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false);
-
+                destroyingMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false).OnComplete(() => TestMoneyShit(destroyingMoney));
             }
             
         }
         
+    }
+
+    private void TestMoneyShit(GameObject destroyingMoney)
+    {
+        destroyingMoney.GetComponent<BoxCollider>().isTrigger = true;
+        destroyingMoney.tag = "Money";
+        DOTween.Kill(destroyingMoney.transform);
     }
 
     private void MoveMoneys()
@@ -88,6 +93,7 @@ public class MoneyCollect : MonoBehaviour
         for(int i = moneys.Count - 1; i >0; i--)
         {
             int index = i;
+            print(moneys[i]);
             Vector3 FirstScale = moneys[i].transform.localScale;
             Vector3 Scale = FirstScale;
             Scale *= 1.2f;
