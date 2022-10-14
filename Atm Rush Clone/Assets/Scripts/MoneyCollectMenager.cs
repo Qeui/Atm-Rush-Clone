@@ -35,37 +35,37 @@ public class MoneyCollectMenager : MonoBehaviour
         StartCoroutine(StackMoneyEffect());
     }
 
-    public void RemoveMoney(GameObject destroyedMoney)
+    public void RemoveMoney(GameObject collidedMoney)
     {
-        int index = moneys.IndexOf(destroyedMoney);
+        int index = moneys.IndexOf(collidedMoney);
 
         for (int i = moneys.Count; i > index; i--)
         {
-            GameObject destroyingMoney = moneys[index];
-            if(destroyingMoney == destroyedMoney)
+            GameObject currentMoney = moneys[index];
+            if(currentMoney == collidedMoney)
             {
-                moneys.Remove(destroyingMoney);
-                DOTween.Kill(destroyingMoney.transform);
-                Destroy(destroyingMoney);
+                moneys.Remove(currentMoney);
+                DOTween.Kill(currentMoney.transform);
+                Destroy(currentMoney);
             }
             else
             {
-                moneys.Remove(destroyingMoney);
-                Destroy(destroyingMoney.GetComponent<MoneyCollision>());
-                destroyingMoney.transform.parent = CollectableMoneys;
-                Vector3 jumpPos = destroyingMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
-                destroyingMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false).OnComplete(() => TestMoneyShit(destroyingMoney));
+                moneys.Remove(currentMoney);
+                Destroy(currentMoney.GetComponent<MoneyCollision>());
+                currentMoney.transform.parent = CollectableMoneys;
+                Vector3 jumpPos = currentMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
+                currentMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false).OnComplete(() => MoneyJumpComplete(currentMoney));
             }
             
         }
         
     }
 
-    private void TestMoneyShit(GameObject destroyingMoney)
+    private void MoneyJumpComplete(GameObject currentMoney)
     {
-        destroyingMoney.GetComponent<BoxCollider>().isTrigger = true;
-        destroyingMoney.tag = "Money";
-        DOTween.Kill(destroyingMoney.transform);
+        currentMoney.GetComponent<BoxCollider>().isTrigger = true;
+        currentMoney.tag = "Money";
+        DOTween.Kill(currentMoney.transform);
     }
 
     private void MoveMoneys()
@@ -93,7 +93,6 @@ public class MoneyCollectMenager : MonoBehaviour
         for(int i = moneys.Count - 1; i >0; i--)
         {
             int index = i;
-            print(moneys[i]);
             Vector3 FirstScale = moneys[i].transform.localScale;
             Vector3 Scale = FirstScale;
             Scale *= 1.2f;
