@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
+        //transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
+        Player.DOMoveZ(Player.transform.position.z + 1, 0.2f, false);
         Move();
     }
 

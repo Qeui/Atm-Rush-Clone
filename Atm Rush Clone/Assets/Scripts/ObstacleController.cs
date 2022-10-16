@@ -5,12 +5,25 @@ using DG.Tweening;
 
 public class ObstacleController : MonoBehaviour
 {
-
+    public bool SideWays, Pendulum;
+    private float z = -180;
 
     // Start is called before the first frame update
     void Start()
     {
-        SideWaysObstacle();
+        if(SideWays && !Pendulum)
+        {
+            SideWaysObstacle();
+        }
+        else if (Pendulum && !SideWays)
+        {
+            PendulumObstacle();
+        }
+        else
+        {
+            Debug.LogWarning("!!Wrong Obstacle Choosed!!");
+        }
+
     }
 
     private void SideWaysObstacle()
@@ -21,6 +34,7 @@ public class ObstacleController : MonoBehaviour
 
     private void PendulumObstacle()
     {
-
+        z = z * -1;
+        transform.DORotate(new Vector3(0, 0, z), 2f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine).OnComplete(() => PendulumObstacle());
     }
 }
