@@ -7,6 +7,8 @@ TagManager:
   - Money
   - Collected
   - Obstacle
+  - Upgrade
+  - Atm
   layers:
   - Default
   - TransparentFX

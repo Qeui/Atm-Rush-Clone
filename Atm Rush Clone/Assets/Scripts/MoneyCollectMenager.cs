@@ -20,7 +20,7 @@ public class MoneyCollectMenager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         MoveMoneys();
     }
