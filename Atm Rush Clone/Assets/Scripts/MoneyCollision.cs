@@ -6,6 +6,11 @@ public class MoneyCollision : MonoBehaviour
     public MoneyUpgrade upgrader;
     public int status = 1;
 
+    private void Start()
+    {
+        upgrader = gameObject.GetComponent<MoneyUpgrade>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Money")
@@ -16,7 +21,6 @@ public class MoneyCollision : MonoBehaviour
                 other.gameObject.tag = "Collected";
                 other.gameObject.AddComponent<MoneyCollision>();
                 other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                upgrader = gameObject.GetComponent<MoneyUpgrade>();
                 MoneyCollectMenager.instance.StackMoney(other.gameObject, MoneyCollectMenager.instance.moneys.Count - 1);
             }
 
@@ -32,9 +36,8 @@ public class MoneyCollision : MonoBehaviour
             MoneyCollectMenager.instance.RemoveMoney(gameObject);
         }
 
-        if (other.gameObject.tag == "Upgrade" && !IsPlayer)
+        if (other.gameObject.tag == "Upgrade" && !IsPlayer && status <=2 )
         {
-            print("Upgrade");
             upgrader.ChangeMoney(status);
             status++;
         }
