@@ -8,6 +8,7 @@ public class MoneyCollectMenager : MonoBehaviour
     public static MoneyCollectMenager instance;
     public List<GameObject> moneys = new List<GameObject>();
     public Transform CollectableMoneys;
+    [SerializeField] UiMoneyMenager uiMoney;
     private float followTime = 0.05f;
 
     private void Awake()
@@ -35,7 +36,7 @@ public class MoneyCollectMenager : MonoBehaviour
         StartCoroutine(StackMoneyEffect());
     }
 
-    public void RemoveMoney(GameObject collidedMoney)
+    public void DestroyMoney(GameObject collidedMoney, int status, bool isAtm)
     {
         int index = moneys.IndexOf(collidedMoney);
 
@@ -47,16 +48,21 @@ public class MoneyCollectMenager : MonoBehaviour
                 moneys.Remove(currentMoney);
                 DOTween.Kill(currentMoney.transform);
                 Destroy(currentMoney);
+                if (!isAtm)
+                {
+                    uiMoney.RemoveMoney(status);
+                }
             }
-            else
+            else 
             {
                 moneys.Remove(currentMoney);
-                Destroy(currentMoney.GetComponent<MoneyCollision>());
+                currentMoney.GetComponent<MoneyCollision>().enabled = false;
                 currentMoney.transform.parent = CollectableMoneys;
                 Vector3 jumpPos = currentMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
                 currentMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false).OnComplete(() => MoneyJumpComplete(currentMoney));
+                uiMoney.RemoveMoney(status);
             }
-            
+            print("count");
         }
         
     }
