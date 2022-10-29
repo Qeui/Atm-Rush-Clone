@@ -8,6 +8,7 @@ public class MoneyCollectMenager : MonoBehaviour
     public static MoneyCollectMenager instance;
     public List<GameObject> moneys = new List<GameObject>();
     public Transform CollectableMoneys;
+    public Transform Collector;
     [SerializeField] UiMoneyMenager uiMoney;
     private float followTime = 0.05f;
 
@@ -65,6 +66,13 @@ public class MoneyCollectMenager : MonoBehaviour
             print("count");
         }
         
+    }
+
+    public void MoneyFinish(GameObject finishedMoney)
+    {
+        finishedMoney.transform.parent = CollectableMoneys;
+        moneys.Remove(finishedMoney);
+        finishedMoney.transform.DOMoveX(Collector.position.x, 0.5f, false).SetEase(Ease.Linear).OnComplete(() => Destroy(finishedMoney.gameObject));
     }
 
     private void MoneyJumpComplete(GameObject currentMoney)

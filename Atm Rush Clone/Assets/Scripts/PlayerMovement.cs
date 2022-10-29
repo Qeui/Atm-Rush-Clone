@@ -4,6 +4,7 @@ using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
     public Transform Player;
+    public PlayerAnimController PlayerAnim;
     public float MovementSpeed;
     public float HorizontalSpeed;
     private Vector3 firstPos, endPos;
@@ -11,9 +12,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
-        Player.DOMoveZ(Player.transform.position.z + 1, 0.2f, false);
-        Move();
+        if (PlayerAnim.isRunning)
+        {
+            //transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
+            Player.DOMoveZ(Player.transform.position.z + 1, 0.2f, false);
+            Move();
+        }
+        
     }
 
     private void Move()

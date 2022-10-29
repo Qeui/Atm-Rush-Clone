@@ -6,6 +6,7 @@ public class MoneyCollision : MonoBehaviour
 {
     public bool IsPlayer;
     public MoneyUpgrade upgrader;
+    public PlayerAnimController PlayerAnim;
     [SerializeField] UiMoneyMenager uiMoney;
     public int status = 1;
 
@@ -55,6 +56,16 @@ public class MoneyCollision : MonoBehaviour
             upgrader.ChangeMoney(status);
             uiMoney.AddMoney(5);
             status++;
+        }
+
+        if(other.gameObject.tag == "Finish" && !IsPlayer)
+        {
+            MoneyCollectMenager.instance.MoneyFinish(gameObject);
+        }
+
+        if (other.gameObject.tag == "Finish" && IsPlayer)
+        {
+            PlayerAnim.isRunning = false;
         }
     }
 }
