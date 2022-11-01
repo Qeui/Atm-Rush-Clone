@@ -37,18 +37,22 @@ public class MoneyCollectMenager : MonoBehaviour
         StartCoroutine(StackMoneyEffect());
     }
 
-    public void DestroyMoney(GameObject collidedMoney, int status, bool isAtm)
+    public void DestroyMoney(GameObject collidedMoney, bool isAtm)
     {
         int index = moneys.IndexOf(collidedMoney);
 
         for (int i = moneys.Count; i > index; i--)
         {
+            
             GameObject currentMoney = moneys[index];
-            if(currentMoney == collidedMoney)
+            int status = currentMoney.GetComponent<MoneyCollision>().status;
+
+            if (currentMoney == collidedMoney)
             {
                 moneys.Remove(currentMoney);
                 DOTween.Kill(currentMoney.transform);
                 Destroy(currentMoney);
+
                 if (!isAtm)
                 {
                     uiMoney.RemoveMoney(status);
@@ -59,10 +63,12 @@ public class MoneyCollectMenager : MonoBehaviour
                 moneys.Remove(currentMoney);
                 currentMoney.GetComponent<MoneyCollision>().enabled = false;
                 currentMoney.transform.parent = CollectableMoneys;
+
                 Vector3 jumpPos = currentMoney.transform.position + new Vector3(Random.Range(-3f,3f),0,Random.Range(0f,5f));
                 currentMoney.transform.DOJump(jumpPos, 2, 1, 0.5f, false).OnComplete(() => MoneyJumpComplete(currentMoney));
                 uiMoney.RemoveMoney(status);
             }
+
             print("count");
         }
         

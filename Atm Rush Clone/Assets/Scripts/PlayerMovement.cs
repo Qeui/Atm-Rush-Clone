@@ -14,8 +14,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerAnim.isRunning)
         {
-            //transform.position += Vector3.forward * MovementSpeed * Time.deltaTime;
-            Player.DOMoveZ(Player.transform.position.z + 1, 0.2f, false);
+            Player.DOMoveZ(Player.transform.position.z + MovementSpeed, 0.2f, false);
             Move();
         }
         
@@ -34,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
             transform.Translate(difX * Time.deltaTime * HorizontalSpeed, 0, 0);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -4.5f, 4.5f), transform.position.y, transform.position.z);
         }
+
         if (Input.GetMouseButtonUp(0))
         {
             firstPos = Vector3.zero;

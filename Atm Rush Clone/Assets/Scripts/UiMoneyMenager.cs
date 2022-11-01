@@ -8,11 +8,13 @@ public class UiMoneyMenager : MonoBehaviour
     private int moneyUI = 0;
     public static UiMoneyMenager instance;
     public TextMeshProUGUI MoneyText;
+    public TextMeshProUGUI FinishMoneyText;
 
     // Update is called once per frame
     void Update()
     {
         MoneyText.text = moneyUI.ToString();
+        FinishMoneyText.text = "Collected: " + moneyUI.ToString();
     }
 
     public void AddMoney(int amount)

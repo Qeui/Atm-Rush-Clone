@@ -43,12 +43,12 @@ public class MoneyCollision : MonoBehaviour
 
         if (other.gameObject.tag == "Obstacle" && !IsPlayer)
         {
-            MoneyCollectMenager.instance.DestroyMoney(gameObject, status,false);
+            MoneyCollectMenager.instance.DestroyMoney(gameObject,false);
         }
 
         if(other.gameObject.tag == "Atm" && !IsPlayer)
         {
-            MoneyCollectMenager.instance.DestroyMoney(gameObject, status,true);
+            MoneyCollectMenager.instance.DestroyMoney(gameObject,true);
         }
 
         if (other.gameObject.tag == "Upgrade" && !IsPlayer && status <=2 )
