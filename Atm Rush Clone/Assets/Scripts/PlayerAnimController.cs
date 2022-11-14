@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimController : MonoBehaviour
@@ -12,6 +10,7 @@ public class PlayerAnimController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If mouse button pressed when player isn't running, start the player running animation and change the UI. 
         if (Input.GetMouseButtonDown(0) && !isRunning && !isStarted)
         {
             isRunning = true;
@@ -19,7 +18,7 @@ public class PlayerAnimController : MonoBehaviour
             Player.SetBool("IsRunning", true);
             UIMenager.UIChanger(UIMenager.MainMenu, UIMenager.PlayUI);
         }
-
+        // If game is started but player isn't running then the game is finished.
         if(isStarted && !isRunning)
         {
             UIMenager.UIChanger(UIMenager.PlayUI, UIMenager.FinishUI);

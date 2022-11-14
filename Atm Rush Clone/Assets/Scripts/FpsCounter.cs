@@ -10,11 +10,13 @@ public class FpsCounter : MonoBehaviour
 
     private void Start()
     {
+        // Default frame rate is 30 in android, this part changes that to 60.
         Application.targetFrameRate = 60;
     }
 
     private void Update()
     {
+        // Calculate the frame rate based on frame delta
         if (Time.unscaledTime > _timer)
         {
             int fps = (int)(1f / Time.unscaledDeltaTime);

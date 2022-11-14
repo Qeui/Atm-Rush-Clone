@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -13,15 +11,16 @@ public class UiMoneyMenager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update the money counts.
         MoneyText.text = moneyUI.ToString();
         FinishMoneyText.text = "Collected: " + moneyUI.ToString();
     }
-
+    // Add the given amount to the moneyUI.
     public void AddMoney(int amount)
     {
         moneyUI += amount;
     }
-
+    // Subtract money from the moneyUI depending on the given status.
     public void RemoveMoney(int status)
     {
         switch (status)

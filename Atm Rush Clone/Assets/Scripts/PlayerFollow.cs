@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFollow : MonoBehaviour
@@ -11,6 +9,7 @@ public class PlayerFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Follow the player's position smoothly and add a offset to it.
         transform.position = Vector3.Lerp(transform.position, Target.position + Offset, Time.deltaTime * FollowSpeed);
     }
 }

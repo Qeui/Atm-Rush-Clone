@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -11,6 +9,7 @@ public class ObstacleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Check if this is a sideways obstacle or a pendulum obtacle.
         if(SideWays && !Pendulum)
         {
             SideWaysObstacle();
@@ -19,19 +18,20 @@ public class ObstacleController : MonoBehaviour
         {
             PendulumObstacle();
         }
+        // If it is both or none log a warning.
         else
         {
             Debug.LogWarning("!!Wrong Obstacle Choosed!!");
         }
 
     }
-
+    // Move the sideways obstacle left and right.
     private void SideWaysObstacle()
     {
         float x = transform.position.x;
         transform.DOMoveX( x + 16 , 3f, false).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
-
+    // Rotate the pendulum obtacle left and right.
     private void PendulumObstacle()
     {
         z = z * -1;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoneyUpgrade : MonoBehaviour
@@ -7,6 +5,7 @@ public class MoneyUpgrade : MonoBehaviour
 
     public GameObject[] MoneyUpgardes;
 
+    // Change the money depending on the status.
     public void ChangeMoney(int status)
     {
         for(int i = 0; i <= 2; i++)
